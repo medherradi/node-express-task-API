@@ -19,8 +19,22 @@ const postTask = async (req, res) => {
 
 const getSingleTask = async (req, res) => {
   console.log(req.params)
-  res.send(`${req.params.id}`)
+  res.send(`get task ${req.params.id}`)
+}
+
+const updateTask = async (req, res) => {
+  res.send(`Im updating a task ${req.params.id}`)
+}
+
+const deleteTask = async (req, res) => {
+  res.send(`im deleting a task ${req.params.id}`)
 }
 
 
-module.exports = { getAllTask, postTask, getSingleTask }
+module.exports = {
+  getAllTask,
+  postTask,
+  getSingleTask,
+  updateTask,
+  deleteTask
+}
