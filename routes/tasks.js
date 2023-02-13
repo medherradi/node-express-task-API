@@ -3,8 +3,6 @@ const router = express.Router()
 const allTask = require('../controllers/tasks')
 
 
-
-
 router.route('/')
   .get(allTask.getAllTask)
   .post(allTask.postTask)

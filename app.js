@@ -1,4 +1,4 @@
-require('./mongodb/connection')
+const connectDB = require('./mongodb/connection')
 const express = require('express')
 const app = express()
 const tasks = require('./routes/tasks')
@@ -12,4 +12,14 @@ app.use('/api/task', tasks)
 
 const port = 3000
 
-app.listen(port, console.log(`server is listening on port ${port}...`)) 
+const startDB = async () => {
+  try {
+    await connectDB()
+    console.log('connection to mongodb atlas ...')
+    app.listen(port, console.log(`server is listening on port ${port}...`))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+startDB()
