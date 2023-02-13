@@ -6,12 +6,7 @@ const tasks = require('./routes/tasks')
 // all middleware
 app.use(express.json())
 
-// all routes
-app.get('/', async (req, res) => {
-  res.send('hello')
-})
-
-app.use('/api/tasks', tasks)
+app.use('/api/task', tasks)
 
 const port = 3000
 
