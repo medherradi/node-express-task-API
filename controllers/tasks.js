@@ -1,8 +1,24 @@
 const Task = require('../model/taskModel')
 
 
-const getAllTask = (req, res) => {
-  res.send('i got all my tasks')
+const getAllTask = async (req, res) => {
+  try {
+    const tasks = await Task.find()
+    if (tasks.length < 1) {
+      res.status(200).json({
+        msg: 'No task to dsplay',
+        count: tasks.length,
+        tasks
+      })
+    }
+    res.status(200).json({
+      msg: `There ${tasks.length === 1 ? 'is one task' : `are ${tasks.length} tasks`}`,
+      count: tasks.length,
+      tasks
+    })
+  } catch (error) {
+    res.status(400).json({ msg: error })
+  }
 }
 
 const postTask = async (req, res) => {
