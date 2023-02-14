@@ -10,7 +10,7 @@ const mongoDBConnection = process.env.MONGODB_CONNECTION
 app.use(express.json())
 
 app.use('/api/task', tasks)
-app.use('/api/task', tasks)
+
 
 const port = 3000
 
