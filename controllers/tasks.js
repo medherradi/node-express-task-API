@@ -6,9 +6,14 @@ const getAllTask = (req, res) => {
 }
 
 const postTask = async (req, res) => {
-  const { name, completed } = req.body
-  const task = await Task.create({ name, completed })
-  res.status(201).json({ task, msg: `${task.name} task has been created successfully` })
+  try {
+    const { name, completed } = req.body
+    const task = await Task.create({ name, completed })
+    res.status(201).json({ task, msg: `${task.name} task has been created successfully` })
+  } catch (error) {
+    console.log(error)
+    res.status(400).json({ msg: error.errors.name.message })
+  }
 }
 
 const getSingleTask = async (req, res) => {
