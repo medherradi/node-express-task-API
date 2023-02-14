@@ -1,4 +1,4 @@
-
+const Task = require('../model/taskModel')
 
 
 const getAllTask = (req, res) => {
@@ -6,15 +6,9 @@ const getAllTask = (req, res) => {
 }
 
 const postTask = async (req, res) => {
-  const { lastname, username } = req.body
-  if (!username || !lastname) {
-    res.status(400).json({
-      status: 'fail',
-      msg: 'plz fill out'
-    })
-  }
-  console.log(lastname, username)
-  res.send(`your lastname is ${lastname} and your username is ${username}`)
+  const { name, completed } = req.body
+  const task = await Task.create({ name, completed })
+  res.status(201).json({ task, msg: `${task.name} task has been created successfully` })
 }
 
 const getSingleTask = async (req, res) => {
