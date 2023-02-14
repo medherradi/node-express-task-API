@@ -5,7 +5,7 @@ const getAllTask = async (req, res) => {
   try {
     const tasks = await Task.find()
     if (tasks.length < 1) {
-      res.status(200).json({
+      return res.status(200).json({
         msg: 'No task to dsplay',
         count: tasks.length,
         tasks
@@ -17,6 +17,7 @@ const getAllTask = async (req, res) => {
       tasks
     })
   } catch (error) {
+    console.log(error)
     res.status(400).json({ msg: error })
   }
 }
@@ -34,15 +35,34 @@ const postTask = async (req, res) => {
 
 const getSingleTask = async (req, res) => {
   console.log(req.params)
-  res.send(`get task ${req.params.id}`)
+  const { id } = req.params
+  try {
+    const task = await Task.findById({ _id: id })
+    if (!task) {
+      return res.status(404).json({ msg: `No task found with the given id : ${id}` })
+    }
+    res.status(200).json({ task })
+  } catch (error) {
+    res.status(400).json({ msg: `No task found with the given id : ${id}` })
+  }
 }
 
 const updateTask = async (req, res) => {
-  res.send(`Im updating a task ${req.params.id}`)
+  res.send(`im deleting a task ${req.params.id}`)
 }
 
 const deleteTask = async (req, res) => {
-  res.send(`im deleting a task ${req.params.id}`)
+  const { id } = req.params
+  try {
+    const task = await Task.findById({ _id: id })
+    if (!task) {
+      return res.status(404).json({ msg: `No task found with the given id : ${id}` })
+    }
+    task.delete()
+    res.status(200).json({ msg: `task with id:${id} has been deleted` })
+  } catch (error) {
+    res.status(200).json({ msg: error })
+  }
 }
 
 
