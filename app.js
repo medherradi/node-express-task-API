@@ -1,6 +1,7 @@
 const connectDB = require('./mongodb/connection')
 const express = require('express')
 const app = express()
+const errorHandler = require('./middleware/errorhandler')
 const tasks = require('./routes/tasksrouter')
 require('dotenv').config()
 
@@ -13,6 +14,11 @@ app.use(express.json())
 // routes
 app.use('/api/tasks', tasks)
 
+app.all('*', async (req, res) => {
+  res.status(404).send('Route does not exist')
+})
+
+app.use(errorHandler)
 
 const port = 3000
 
