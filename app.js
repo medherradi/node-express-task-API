@@ -1,15 +1,17 @@
 const connectDB = require('./mongodb/connection')
 const express = require('express')
 const app = express()
-const tasks = require('./routes/tasks')
+const tasks = require('./routes/tasksrouter')
 require('dotenv').config()
 
 const mongoDBConnection = process.env.MONGODB_CONNECTION
 
 // all middleware
+app.use(express.static('./public'))
 app.use(express.json())
 
-app.use('/api/task', tasks)
+// routes
+app.use('/api/tasks', tasks)
 
 
 const port = 3000

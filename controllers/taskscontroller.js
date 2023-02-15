@@ -51,6 +51,7 @@ const updateTask = async (req, res) => {
   const { id } = req.params
   const { name, completed } = req.body
   try {
+    // we can use another method findByIdAndUpdate 
     const task = await Task.findById({ _id: id })
     if (!task) {
       return res.status(404).json({ msg: `No task found with the given id : ${id}` })
