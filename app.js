@@ -20,7 +20,7 @@ app.all('*', async (req, res) => {
 
 app.use(errorHandler)
 
-const port = 3000
+const port = process.env.PORT || 3000
 
 const startDB = async () => {
   try {

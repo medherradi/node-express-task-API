@@ -45,33 +45,27 @@ const getSingleTask = async (req, res) => {
 const updateTask = asyncHandler(async (req, res) => {
   const { id } = req.params
   const { name, completed } = req.body
-  if (!name) {
-    return res.status(400).json({ msg: 'name is required!' })
-  }
-  // we can use another method findByIdAndUpdate 
-  const task = await Task.findById({ _id: id })
+  // we can use another method findOneAndUpdate 
+  const task = await Task.findByIdAndUpdate({ _id: id },
+    { name, completed },
+    { new: true, runValidators: true })
   if (!task) {
     return res.status(404).json({ msg: `No task found with the given id : ${id}` })
   }
-  task.name = name
-  task.completed = completed
-  task.save()
+  // task.name = name
+  // task.completed = completed
+  // task.save()
   res.status(201).json({ task, msg: `task ${task.name} has been updated` })
 })
 
-const deleteTask = async (req, res) => {
+const deleteTask = asyncHandler(async (req, res) => {
   const { id } = req.params
-  try {
-    const task = await Task.findById({ _id: id })
-    if (!task) {
-      return res.status(404).json({ msg: `No task found with the given id : ${id}` })
-    }
-    task.delete()
-    res.status(200).json({ msg: `task with id:${id} has been deleted` })
-  } catch (error) {
-    res.status(200).json({ msg: error })
+  const task = await Task.findByIdAndDelete({ _id: id })
+  if (!task) {
+    return res.status(404).json({ msg: `No task found with the given id : ${id}` })
   }
-}
+  res.status(200).json({ msg: `task ${task.name} has been deleted` })
+})
 
 
 module.exports = {
